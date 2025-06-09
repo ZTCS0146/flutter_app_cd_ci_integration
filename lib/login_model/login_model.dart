@@ -10,40 +10,61 @@ class AuthProvider with ChangeNotifier {
   bool isLoading = false;
 
   AuthProvider({required this.initMeth});
+Future<void> sendPhoneNumber(String phoneNumber, BuildContext context) async {
+  isLoading = true;
+  notifyListeners();
 
-  Future<void> sendPhoneNumber(String phoneNumber,BuildContext context) async {
-    isLoading = true;
-    notifyListeners();
+  try {
+    final response = await http.post(
+      Uri.parse('http://35.180.57.31:7000/user/send-otp'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{"mobileNumber": phoneNumber}),
+    );
 
-    try {
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseData = json.decode(response.body);
 
-    final response = await  http.post(
-    Uri.parse('http://35.180.57.31:7000/user/send-otp'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(<String, String>{"mobileNumber": phoneNumber},),
-  );
-   
+     
+        final int otp = responseData['otp'];
+        final String message = responseData['message'];
 
-      if (response.statusCode == 200) {
-      
-        print("OTP sent successfully!");
-        Navigator
-        .of(context)
-        .pushReplacement(new MaterialPageRoute(builder: (BuildContext context) {
-      return new OTPVerificationScreen(mobileNumber:phoneNumber ,);
-    }));
-      } else {
-        print("Failed to send OTP: ${response.body}");
-      }
-    } catch (e) {
-      print("Error: $e");
+        // Show the SnackBar with OTP
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('$message. OTP: $otp'),
+            duration: Duration(seconds: 3),
+          ),
+        );
+
+        // Wait for SnackBar to finish before navigating
+        await Future.delayed(Duration(seconds: 3));
+
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (BuildContext context) => OTPVerificationScreen(mobileNumber: phoneNumber),
+          ),
+        );
+     
+    } else {
+      print("Failed to send OTP: ${response.body}");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Something went wrong!")),
+      );
     }
-
-    isLoading = false;
-    notifyListeners();
+  } catch (e) {
+    print("Error: $e");
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Network error: $e")),
+    );
   }
+
+  isLoading = false;
+  notifyListeners();
+}
+
+ 
 
   Future<void> verifyOtp(String mobile, String otp, BuildContext context) async {
     isLoading = true;

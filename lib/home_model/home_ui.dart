@@ -24,10 +24,10 @@ class HomePage extends StatelessWidget {
             buildCustomAppBar(),
               const SizedBox(height: 10),
               _buildUpIcons(),
-              const SizedBox(height: 10),
-              Image.asset('assests/images/snakeup.png', width: 80),
               
-                  Image.asset('assests/images/snake.png', width: 80),
+              Image.asset('assests/images/snakeup.png', width: 90),
+              
+                  Image.asset('assests/images/snake.png', width: 90),
               const SizedBox(height: 10),
               _buildModeButtons(),
               const SizedBox(height: 10),
@@ -103,42 +103,167 @@ class HomePage extends StatelessWidget {
 
   Widget _modeButton(String label, IconData icon) {
     return Expanded(
-      child: Container(
-        height: 90,
-        decoration: BoxDecoration(
-          color: Colors.teal[800],
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Colors.orangeAccent, width: 4),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, color: Colors.orangeAccent,),
-              const SizedBox(height: 6),
-              Text(label,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-            ],
+      child: 
+    Container(
+      
+      height: 110,
+      decoration: BoxDecoration(
+        color: Color.fromRGBO(255, 232, 75, 1),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 6,
+            offset: Offset(2, 4),
           ),
-        ),
+        ],
+        border: Border(
+      top: BorderSide(color: Color.fromRGBO(255, 232, 75, 1), width: 2),
+      left: BorderSide(color:Color.fromRGBO(255, 232, 75, 1) ,width: 2),
+      right: BorderSide(color:Color.fromRGBO(255, 232, 75, 1), width: 2),
+      bottom: BorderSide.none, // no border at bottom
+    ),
       ),
-    );
+      child: Column(
+        children: [
+          // Top part with icon and gradient background
+          Container(
+            height: 60,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+              gradient: LinearGradient(
+                colors: [Color(0xFF004C4C), Color(0xFF006666)], // greenish blue
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+            ),
+            child: Center(
+              child: Icon(
+              icon,
+                size: 40,
+                color: Color.fromRGBO(255, 232, 75, 1)
+              ),
+            ),
+          ),
+          // Bottom part with text
+          Expanded(
+            child: Center(
+              child: Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: label,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                   
+                  ],
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ],
+      ),
+    ));
+      // Container(
+      //   height: 90,
+      //   decoration: BoxDecoration(
+      //     color: Colors.teal[800],
+      //     borderRadius: BorderRadius.circular(15),
+      //     border: Border.all(color: Colors.orangeAccent, width: 4),
+      //   ),
+      //   child: Center(
+      //     child: Column(
+      //       mainAxisAlignment: MainAxisAlignment.center,
+      //       children: [
+      //         Icon(icon, color: Colors.orangeAccent,),
+      //         const SizedBox(height: 6),
+      //         Text(label,
+      //             textAlign: TextAlign.center,
+      //             style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+      //       ],
+      //     ),
+      //   ),
+      // ),
+    
   }
 
   Widget _buildClaimSection() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 40),
-      padding: const EdgeInsets.all(10),
+      width: 240,
+      height: 50,
       decoration: BoxDecoration(
-        color: Colors.orangeAccent,
-        borderRadius: BorderRadius.circular(30),
-        border: Border.all(color: Colors.yellow, width: 2),
+        gradient: LinearGradient(
+          colors: [Color(0xFFFFD700), Color(0xFFFFA500)], // yellow to orange
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 6,
+            offset: Offset(2, 4),
+          ),
+        ],
       ),
-      child: const Text(
-        "CLAIM\nPlay & League Get More Awards",
-        textAlign: TextAlign.center,
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+      padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      child: Row(
+        children: [
+          // Icon or image on the left
+        Container(
+  width:55,
+  height: 80,
+  child: Stack(
+    alignment: Alignment.centerLeft,
+    children: [
+      // Shield background
+      Image.asset(
+        'assests/images/Vector1.png',
+        fit: BoxFit.contain,
+      ),
+      
+      // Trophy icon on top
+      Image.asset(
+        'assests/images/trophy.png', // Replace with your actual trophy asset
+        width: 40,
+        height: 30,
+        fit: BoxFit.contain,
+      ),
+    ],
+  ),
+),
+
+     
+          // Texts
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: Text(
+                  "CLAIM",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              Text(
+                "Play A League Get More Awards",
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.black87,
+                ),
+              ),
+            ],
+          )
+        ],
       ),
     );
   }
@@ -150,7 +275,7 @@ class HomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Image.asset('assests/images/frame.png', width: 50),
-          Image.asset('assests/images/group.png', width: 50),
+          Image.asset('assests/images/export.png', width: 50),
         ],
       ),
     );
@@ -158,7 +283,7 @@ class HomePage extends StatelessWidget {
 
     Widget _buildUpIcons() {
     return Padding(
-      padding: EdgeInsetsDirectional.all(16),
+      padding: EdgeInsets.only(left:16,right:16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

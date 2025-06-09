@@ -57,7 +57,7 @@ String? mobile;
                         child: Column(
                           children: [
                             GestureDetector(
-                              onTap: () => provider.pickImage(),
+                               onTap: () => provider.pickImage(),
                               child: CircleAvatar(
                                 radius: 35,
                                 backgroundColor: Colors.yellow,
@@ -88,13 +88,13 @@ String? mobile;
                         // provider.isLoading
                         //     ? null
                            () {
-                                                Navigator
-        .of(context)
-        .pushReplacement(new MaterialPageRoute(builder: (BuildContext context) {
-      return new HomePage();
-    }));
-                              // File file = File(provider.profileImage!.path);
-                              // provider.submitProfile(_nameController.text,mobile!,_userController.text,context,file);
+    //                                             Navigator
+    //     .of(context)
+    //     .pushReplacement(new MaterialPageRoute(builder: (BuildContext context) {
+    //   return new HomePage();
+    // }));
+                              File file = File(provider.profileImage!.path);
+                              provider.submitProfile(_nameController.text,mobile!,_userController.text,context,file);
                             } ,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color.fromRGBO(255, 188, 0, 1),
