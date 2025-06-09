@@ -2,22 +2,22 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_game/home_model/home_ui.dart';
-import 'package:image_picker/image_picker.dart';
+// import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
 class ProfileProvider with ChangeNotifier {
   File? profileImage;
   bool isLoading = false;
 
-  final picker = ImagePicker();
+  // final picker = ImagePicker();
 
-  Future<void> pickImage() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
-    if (pickedFile != null) {
-      profileImage = File(pickedFile.path);
-      notifyListeners();
-    }
-  }
+  // Future<void> pickImage() async {
+  //   final pickedFile = await picker.pickImage(source: ImageSource.camera);
+  //   if (pickedFile != null) {
+  //     profileImage = File(pickedFile.path);
+  //     notifyListeners();
+  //   }
+  // }
 
   Future<void> submitProfile(String name,String mobile,String username,BuildContext context, filepath) async {
     if (username.isEmpty || profileImage == null) return;
